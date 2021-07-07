@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <meta charset="utf-8" />
+    <link href="main.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery.js" type="text/javascript"></script>
+    <script>
+ 
+        $(document).ready(function(){
+         
+            $("#submit").click(function(e){
+                e.preventDefault();
+         
+                $.get(
+                    'script.php', 
+                    function(data){
+                        // convert string to JSON
+                         response = $.parseJSON(data);
+                         $(function() {
+                            $.each(response, function(i, item) {
+                                employee = $.parseJSON(item);
+
+                                console.log(employee);
+                                var $tr = $('<tr>').append(
+                                    $('<td>').text(employee.id),
+                                    $('<td>').text(employee.profile.firstName),
+                                    $('<td>').text(employee.profile.lastName),
+                                    $('<td>').text(employee.email),
+                                    $('<td>').text(employee.address),
+                                    $('<td>').text(employee.registered),
+                                ).appendTo('#records_table');
+                                // console.log($tr.wrap('<p>').html());
+                            });
+                        });
+                          
+                    },
+                    'text'
+                 );
+            });
+        });
+
+        
+
+        
+        </script>
+    <title>Momji</title>
+</head>
+ 
+<body>
+    
+    <h1>Récupérer la liste des intervenants</h1>
+    
+    <form>
+        <p>
+            <input type="submit" id="submit" value="Envoyer" />
+        </p>
+    </form>
+    <div id="resultat">
+        <table 
+            border="1" 
+            cellspacing="0" 
+            cellpadding="0"
+            width="500" 
+            align="center"
+            id="records_table"
+        >
+        </table>
+    </div>
+ 
+</body>
+</html>
